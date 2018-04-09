@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+		<script type="text/javascript" src="js/three.min.js"></script>
+        <script type="text/javascript" src="js/game.js"></script>
+		<link href="style.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="panel">
+            <div class="title_div">
+                <h1>
+    <!--				<span class="the">World</span>-->
+                    <span class="title">World War Z</span>
+                    <span class="byline">Fight for survival.</span>
+                </h1>
+            </div>
+			<div class="entries">
+				<div class="entry">
+					<label>Coins</label>
+					<p id="coinsCollected" class="coinsCollected">0</p>
+				</div>
+				<div class="entry">
+					<label>Health</label>
+					<div class="status">
+						<div class="healthBar" id="healthBar"></div>
+					</div>
+				</div>
+                <p class="instructions">Use the mouse/trackpad to move. Click to shoot.<br><br>Collect the gold coins, avoid/ destroy the red lava.</p>
+			</div>
+		</div>
+		<div id="world"></div>
+	</body>
+</html>
