@@ -9,7 +9,8 @@ var Colors = {
     blue:0x68c3c0,
     green:0x669900,
     greenDark:0x535640,
-    golden:0xff9900
+    golden:0xff9900,
+    orangeDark: 0xFF4500,
 };
 
 
@@ -98,14 +99,14 @@ function handleWindowResize() {
 * Step 2: Setting up the lights.
 *
 */
-var hemisphereLight, shadowLight;
+var ambientLight, hemisphereLight, shadowLight;
 
 function createLights() {
 	// A hemisphere light is a gradient colored light; 
 	// the first parameter is the sky color, the second parameter is the ground color, 
 	// the third parameter is the intensity of the light
-	hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, .9)
-	
+	hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, .9);
+    	
 	// A directional light shines from a specific direction. 
 	// It acts like the sun, that means that all the rays produced are parallel. 
 	shadowLight = new THREE.DirectionalLight(0xffffff, .9);
@@ -333,7 +334,7 @@ Tank = function() {
 
     // the tank body
     var geomBody = new THREE.BoxGeometry(100,25,50);
-	var matBody = new THREE.MeshPhongMaterial({color:Colors.red, shading:THREE.FlatShading});
+	var matBody = new THREE.MeshPhongMaterial({color:Colors.greenDark, shading:THREE.FlatShading});
 	var body = new THREE.Mesh(geomBody, matBody);
 	body.castShadow = true;
 	body.receiveShadow = true;
@@ -341,17 +342,101 @@ Tank = function() {
 
     // the top of the tank
     var geomTop = new THREE.BoxGeometry(50,15,50);
-	var matTop = new THREE.MeshPhongMaterial({color:Colors.red, shading:THREE.FlatShading});
+	var matTop = new THREE.MeshPhongMaterial({color:Colors.greenDark, shading:THREE.FlatShading});
 	var top = new THREE.Mesh(geomTop, matTop);
 	top.castShadow = true;
 	top.receiveShadow = true;
     top.position.y = 20;
 	this.mesh.add(top);
     
+    // glass
+    var geomGlass = new THREE.BoxGeometry(40,9,5);
+	var matGlass = new THREE.MeshPhongMaterial({color:Colors.brownDark, shading:THREE.FlatShading});
+	var glass = new THREE.Mesh(geomGlass, matGlass);
+	glass.castShadow = true;
+	glass.receiveShadow = true;
+    glass.position.y = 21;
+    glass.position.z = 25;
+	this.mesh.add(glass);
+    
+    // adding wheels
+    var geomWheel = new THREE.CylinderGeometry(5,5,5);
+    var matWheel = new THREE.MeshPhongMaterial({color:Colors.brownDark, shading:THREE.FlatShading});
+    this.wheel1 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel1.castShadow = true;
+    this.wheel1.receiveShadow = true;
+    this.wheel1.position.set(45, -10, 25);
+    this.wheel1.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel1);
+    
+    this.wheel2 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel2.castShadow = true;
+    this.wheel2.receiveShadow = true;
+    this.wheel2.position.set(35, -10, 25);
+    this.wheel2.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel2);
+    
+    this.wheel3 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel3.castShadow = true;
+    this.wheel3.receiveShadow = true;
+    this.wheel3.position.set(25, -10, 25);
+    this.wheel3.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel3);
+
+    this.wheel4 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel4.castShadow = true;
+    this.wheel4.receiveShadow = true;
+    this.wheel4.position.set(15, -10, 25);
+    this.wheel4.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel4);
+    
+    this.wheel5 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel5.castShadow = true;
+    this.wheel5.receiveShadow = true;
+    this.wheel5.position.set(5, -10, 25);
+    this.wheel5.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel5);
+    
+    this.wheel6 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel6.castShadow = true;
+    this.wheel6.receiveShadow = true;
+    this.wheel6.position.set(-5, -10, 25);
+    this.wheel6.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel6);
+
+    this.wheel7 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel7.castShadow = true;
+    this.wheel7.receiveShadow = true;
+    this.wheel7.position.set(-15, -10, 25);
+    this.wheel7.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel7);
+
+    this.wheel8 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel8.castShadow = true;
+    this.wheel8.receiveShadow = true;
+    this.wheel8.position.set(-25, -10, 25);
+    this.wheel8.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel8);
+    
+    this.wheel9 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel9.castShadow = true;
+    this.wheel9.receiveShadow = true;
+    this.wheel9.position.set(-35, -10, 25);
+    this.wheel9.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel9);
+
+    this.wheel10 = new THREE.Mesh(geomWheel, matWheel);
+    this.wheel10.castShadow = true;
+    this.wheel10.receiveShadow = true;
+    this.wheel10.position.set(-45, -10, 25);
+    this.wheel10.rotation.x = Math.PI/2;
+    this.mesh.add(this.wheel10);
+
+    
     // the shooting part
     var geomShoot = new THREE.CylinderGeometry(5,5,75,50,10);
     geomShoot.translate( 0, 37.5, 0 );
-    var matShoot = new THREE.MeshPhongMaterial({color:Colors.red, shading:THREE.FlatShading});
+    var matShoot = new THREE.MeshPhongMaterial({color:Colors.greenDark, shading:THREE.FlatShading});
     this.shoot = new THREE.Mesh(geomShoot, matShoot);
 	this.shoot.castShadow = true;
 	this.shoot.receiveShadow = true;
@@ -364,7 +449,7 @@ var tank;
 function createTank(){ 
 	tank = new Tank();
 	tank.mesh.scale.set(.5,.5,.5);
-	tank.mesh.position.set(0, -30, -75);
+	tank.mesh.position.set(0, -30, -80);
 	scene.add(tank.mesh);
 }
 
@@ -379,6 +464,16 @@ function updateTank(){
 	// update the airplane's position
 	tank.mesh.position.x = targetX_movement;
     tank.shoot.rotation.z = -Math.PI/2 + Math.atan2(targetY_pointing, targetX_pointing);
+    tank.wheel1.rotation.y -= 0.05;
+    tank.wheel2.rotation.y -= 0.05;
+    tank.wheel3.rotation.y -= 0.05;
+    tank.wheel4.rotation.y -= 0.05;
+    tank.wheel5.rotation.y -= 0.05;
+    tank.wheel6.rotation.y -= 0.05;
+    tank.wheel7.rotation.y -= 0.05;
+    tank.wheel8.rotation.y -= 0.05;
+    tank.wheel9.rotation.y -= 0.05;
+    tank.wheel10.rotation.y -= 0.05;
 }
 
 function normalize(v,vmin,vmax,tmin, tmax){
@@ -490,7 +585,7 @@ function updateCoins() {
     }
     // updating old coins
     coins.forEach(function(c) {
-        c.mesh.position.y = c.mesh.position.y - 1;
+        c.mesh.position.y = c.mesh.position.y - 0.8 * difficulty;
         c.mesh.rotation.x += Math.random() * 0.01;
         c.mesh.rotation.y += Math.random() * 0.01;
         c.mesh.rotation.z += Math.random() * 0.01;
@@ -530,8 +625,8 @@ function Lava() {
     
     this.mesh = new THREE.Object3D();
     
-    var geomLava = new THREE.TetrahedronGeometry(8,2);
-    var matLava = new THREE.MeshBasicMaterial({color: Colors.red});
+    var geomLava = new THREE.DodecahedronGeometry(8);
+    var matLava = new THREE.MeshBasicMaterial({color: Colors.orangeDark});
     var lava = new THREE.Mesh(geomLava, matLava);
     lava.castShadow = true;
 	lava.receiveShadow = true;
@@ -550,17 +645,17 @@ function createLava() {
 }
 
 var lavaDistTol = 30;
-var lavaBulDistTol = 25;
+var lavaBulDistTol = 15;
 
 function updateLava() {
     // generating new coins
-    if (coins.length < maxNumCoins && Math.random() < pNewLava) {
+    if (lavas.length < maxNumLavas && Math.random() < pNewLava) {
         lava = createLava();
         lavas.push(lava);
     }
     // updating old coins
     lavas.forEach(function(l) {
-        l.mesh.position.y = l.mesh.position.y - 1.5;
+        l.mesh.position.y = l.mesh.position.y - difficulty;
         l.mesh.rotation.x += Math.random() * 0.01;
         l.mesh.rotation.y += Math.random() * 0.01;
         l.mesh.rotation.z += Math.random() * 0.01;
@@ -573,6 +668,7 @@ function updateLava() {
             lavas.splice(index, 1);
             scene.remove(l.mesh);
             livesLeft -= 1;
+            // updating health bar
             healthBar.style.width = (livesLeft/5*100).toString() + '%';
             if (livesLeft == 2) {
                 healthBar.style.backgroundColor = "#ff9900";
@@ -585,9 +681,13 @@ function updateLava() {
             var diffPos = b.mesh.position.clone().sub(l.mesh.position.clone());
             var d = diffPos.length();
             if (d < lavaBulDistTol){
+                collected
                 var index = lavas.indexOf(l);
                 lavas.splice(index, 1);
                 scene.remove(l.mesh);
+                // adding two coins for destroying a piece of lava
+                totalCoinsCollected += 2;
+                collected.innerHTML = totalCoinsCollected;
             }})
         // removing if out of screen
         if (!(isInView(pos))) {
@@ -596,6 +696,19 @@ function updateLava() {
             scene.remove(l.mesh);
         }
     })    
+}
+
+// a measure of the difficulty of the game: affects number/speed of lava/coins falling
+var difficulty = 1;
+// update difficulty of the game based on how many coins have been collected
+function updateDiff() {
+    difficulty = Math.max(1, 0.75 * Math.floor(Math.log(totalCoinsCollected/3)));
+    // updating lava related parameters
+    maxNumLavas = 7 + Math.floor(difficulty);
+    pNewLava = 0.0075 + difficulty/500;
+    // updating coin realted parameters;
+    maxNumCoins = 10 + Math.floor(difficulty);
+    pNewCoin = 0.015 + difficulty/250;
 }
 
 /**
@@ -639,6 +752,8 @@ function loop(){
     // create and update all coins/lava
     updateCoins();
     updateLava();
+    // update difficulty of game
+    updateDiff();
     // check if game over
     checkGameOver();
 
