@@ -681,10 +681,14 @@ function updateLava() {
             var diffPos = b.mesh.position.clone().sub(l.mesh.position.clone());
             var d = diffPos.length();
             if (d < lavaBulDistTol){
-                collected
+                // removing lava that has been hit
                 var index = lavas.indexOf(l);
                 lavas.splice(index, 1);
                 scene.remove(l.mesh);
+                // removing bullet that hit the lava
+                var index = bullets.indexOf(b);
+                bullets.splice(index, 1);
+                scene.remove(b.mesh);
                 // adding two coins for destroying a piece of lava
                 totalCoinsCollected += 2;
                 collected.innerHTML = totalCoinsCollected;
