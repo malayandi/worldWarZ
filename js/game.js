@@ -10,7 +10,7 @@ var Colors = {
     green:0x669900,
     greenDark:0x535640,
     golden:0xff9900,
-    orangeDark: 0xFF4500,
+    orangeDark: 0xB80000,
 };
 
 
@@ -599,6 +599,7 @@ function updateCoins() {
             scene.remove(c.mesh);
             totalCoinsCollected += 1;
             collected.innerHTML = totalCoinsCollected;
+            
         }
         // removing if out of screen
         if (!(isInView(pos))) {
@@ -670,7 +671,9 @@ function updateLava() {
             livesLeft -= 1;
             // updating health bar
             healthBar.style.width = (livesLeft/5*100).toString() + '%';
-            if (livesLeft == 2) {
+            if (livesLeft > 2) {
+                healthBar.style.backgroundColor = "#669900";
+            } else if (livesLeft == 2) {
                 healthBar.style.backgroundColor = "#ff9900";
             } else if (livesLeft < 2) {
                 healthBar.style.backgroundColor = "red";
@@ -738,7 +741,27 @@ function isInView(pos) {
 function checkGameOver() {
     if (livesLeft == 0) {
         alert("Game Over! :(");
-        location.reload();
+        tank.mesh.position.x = 0;
+        
+        livesLeft = 5;
+        healthBar.style.backgroundColor = "#669900";
+        healthBar.style.width = '95%';
+        
+        totalCoinsCollected = 0;
+        collected.innerHTML = totalCoinsCollected;
+        
+        bullets.forEach(function(b) {
+            scene.remove(b.mesh);
+        })
+        coins.forEach(function(b) {
+            scene.remove(b.mesh);
+        })
+        lavas.forEach(function(b) {
+            scene.remove(b.mesh);
+        })
+        bullets = [];
+        coins = [];
+        lavas = [];
     }
 }
 
