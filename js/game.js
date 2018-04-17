@@ -741,6 +741,7 @@ function isInView(pos) {
 function checkGameOver() {
     if (livesLeft == 0) {
         alert("Game Over! :(");
+        started = false;
         tank.mesh.position.x = 0;
         
         livesLeft = 5;
@@ -766,8 +767,6 @@ function checkGameOver() {
 }
 
 function loop(){
-	// Rotate the propeller, the sea and the sky
-//	airplane.propeller.rotation.x += 0.3;
 	sky.mesh.rotation.z += .0075;
     
     ground.moveWaves();
@@ -777,12 +776,14 @@ function loop(){
     // update all bullets
     updateBullets();
     // create and update all coins/lava
-    updateCoins();
-    updateLava();
-    // update difficulty of game
-    updateDiff();
-    // check if game over
-    checkGameOver();
+    if (started == true) {
+        updateCoins();
+        updateLava();
+        // update difficulty of game
+        updateDiff();
+        // check if game over
+        checkGameOver();
+    }
 
 	// render the scene
 	renderer.render(scene, camera);
@@ -808,6 +809,10 @@ function handleMouseMove(event) {
 }
 
 function handleMouseClick(event) {
+    if (started == false) {
+        started = true;
+        start_message.style.display = "none";
+    }
     var originX = tank.shoot.position.x;
     var originY = tank.shoot.position.y;
         
@@ -830,13 +835,16 @@ function handleMouseClick(event) {
     }
 }
 
-// number of coins collected
-var collected, healthBar;
+// number of coins collected and overall health
+var collected, healthBar, start_message;
+// flag for whether game is started yet
+var started;
 
 function init() {
     
     collected = document.getElementById("coinsCollected");
     healthBar = document.getElementById("healthBar");    
+    start_message = document.getElementById("click_message");    
     
 	// set up the scene, the camera and the renderer
 	createScene();
@@ -846,7 +854,9 @@ function init() {
     createGround();
 	createTank();
 	createSky();
-        
+    
+    started = false;
+    
     maxY = findMaxY();
     
     document.addEventListener('mousemove', handleMouseMove, false);
